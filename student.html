@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Student</title>
+</head>
+<body>
+    <nav><ul id="nav"></ul></nav>
+    <main>
+        <h1>Student Maintenance</h1>
+        <div id="itemWrapper">
+            <table>
+                <tr>
+                    <td colspan="5">
+                        <select id="semesterList" onchange="getClass(this)" style="width:100%"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <select id="classList" onclick="getStudent(this)" style="width:100%"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <select id='studentList'  multiple style="width:100%"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input 
+                            id="meid"
+                            type="text" 
+                            placeholder="MEID"
+                            style="width:85px;"
+                        >
+                    </td>
+                    <td>
+                        <input 
+                            id="firstName"
+                            type="text" 
+                            placeholder="First Name"
+                            style="width:85px;"
+                        >
+                    </td>
+                    <td>
+                        <input 
+                            id="lastName"
+                            type="text" 
+                            placeholder="Last Name"
+                            style="width:85px;"
+                        >
+                    </td>
+                    <td style="text-align: right;">
+                        <button onclick="deleteStudent()">Delete</button>
+                        <button onclick="addStudent()">Add</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </main>
+</body>
+<script src="./assets/data/array.js"></script>
+<script src="./assets/data/jscript.js"></script>
+<script>
+
+    getMenu();
+    getSemester();
+
+    function deleteStudent() {
+        // set variables
+        var studentIndex = document.getElementById("studentList").selectedIndex;
+        var studentName = document.querySelector('#studentList').selectedOptions[0].value;
+        var ary = eval(`ary${studentName}`);
+
+        // validate that class is selected
+        if (studentIndex < 0) {
+            alert('Please select the student you want to delete.');
+            return;
+        }
+
+        // remove class from array and redisplay list
+        ary.splice(studentName, 1);
+        getClass(document.getElementById('studentList'));
+    }
+
+    function addStudent() {
+        // set up variables
+        var studentIndex = document.querySelector('#studentList').selectedOptions[0].value;
+        // another way of getting the studentIndex
+        // var studentIndex = document.getElementById('semesterList')[document.getElementById('semesterList').selectedIndex].value;
+        var lastName = document.getElementById('lastName').value;
+        var firstName = document.getElementById('firstName').value;
+        var meid = document.getElementById('meid').value;
+        var ary = eval(`ary${studentIndex}`);
+
+        // push new class to array
+        var newAry = ary.push([`${firstName}`,`${lastName} ${firstName} ${meid}`]);
+
+        // reset input fields
+        document.getElementById('lastName').value = '';
+        document.getElementById('firstName').value = '';
+        document.getElementById('meid').value = '';
+        
+        // reload page with new values
+        getClass(document.getElementById('semesterList'));
+    }
+
+</script>
+</html>
