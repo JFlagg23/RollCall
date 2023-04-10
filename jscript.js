@@ -89,6 +89,14 @@ function getStudent(objClass) {
     // reset student list
     studentId.length = 0;
 
+    if(blnOption) {
+        // add a placeholder option
+        option.value = 0;
+        option.text = 'Select a Student';
+        classId.add(option);
+    }
+ 
+
     // populate student list from array
     for (x = 0; x < aryStudents.length; x++) {
         var option = document.createElement('option');
@@ -103,7 +111,7 @@ function getStudentTable(objClass) {
     var classId = objClass.options[objClass.selectedIndex].value;
     var aryStudents = eval(`ary${classId}`);
     var studentId = document.getElementById('studentList');
-
+    
     // reset student list
     studentId.innerHTML = '';
 
